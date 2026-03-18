@@ -47,9 +47,9 @@ Found 3 device(s):
 
   IP                 MAC                  Hostname                  Vendor
   ────────────────── ──────────────────── ───────────────────────── ────────────────────
-  10.10.2.138        0C:38:3E:2F:AA:5E   —                         Fanvil Technology
-  10.10.2.121        0C:38:3E:1B:22:F0   —                         Fanvil Technology
-  10.10.2.139        0C:38:3E:44:B1:03   —                         Fanvil Technology
+  10.10.2.138        0C:38:3E:2F:**:**   —                         Fanvil Technology
+  10.10.2.121        0C:38:3E:1B:**:**   —                         Fanvil Technology
+  10.10.2.139        0C:38:3E:44:**:**   —                         Fanvil Technology
 ```
 
 ## Common Vendor Prefixes
