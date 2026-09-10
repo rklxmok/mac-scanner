@@ -1,27 +1,63 @@
 # MAC Vendor Scanner
 
-A simple interactive CLI tool that scans your local network for devices matching a specific vendor MAC prefix. Useful for finding all devices from a particular manufacturer (Fanvil, Axis, Shelly, Ubiquiti, etc.) on your LAN.
+A LAN scanner for devices matching a specific vendor MAC prefix — useful for finding all devices from a particular manufacturer (Fanvil, Axis, Shelly, Ubiquiti, etc.) on your network. Ships with both a GUI application and an interactive CLI.
 
 ## Features
 
+- **GUI application** (`mac_scanner_gui.py`, PyQt6) — installable to your app menu
+- **Interactive CLI** (`mac_scanner.py`) — same features in the terminal
 - Auto-detects network interfaces and subnets
 - Accepts MAC prefix in any format (`0c38ab`, `0C:38:AB`, `0c-38-ab`)
 - Shows IP, MAC, hostname, and vendor for each match
-- Works with `ifconfig` or `ip addr` (auto-fallback)
-- Clean interactive CLI with subnet selection
+- Works with `ip addr` or `ifconfig` (auto-fallback)
+- **No sudo prompt at scan time** — the installer creates a scoped sudoers rule allowing only `nmap -sn`
 
 ## Requirements
 
-- Python 3.6+
-- `nmap` installed (`sudo apt install nmap` or `sudo pacman -S nmap`)
-- `sudo` access (nmap needs root for MAC address discovery)
+- Linux with `nmap` (`sudo pacman -S nmap` / `sudo apt install nmap`)
+- GUI: Python 3 with PyQt6
+- CLI: Python 3.6+ (standard library only)
+- `sudo` access **once**, to run the installer
 
-No Python packages required — uses only the standard library.
+## Install (GUI app + passwordless scans)
+
+Run the installer once with sudo:
+
+```bash
+cd mac-scanner
+sudo ./install.sh
+```
+
+The installer:
+
+1. Copies the app to `/opt/mac-scanner`
+2. Installs the icon and an applications-menu entry ("MAC Vendor Scanner")
+3. Creates `/etc/sudoers.d/mac-scanner` allowing **only** `nmap -sn <subnet>` to run without a password — no other root access is granted
+
+After that, launch **MAC Vendor Scanner** from your app menu (or run `mac-scanner` in a terminal) and scan without any password prompt.
 
 ## Usage
 
+### GUI
+
+Launch from the app menu, pick an interface, enter a vendor prefix, click **Scan**. Press Enter in the prefix field to scan, or click the button again to cancel.
+
+### CLI
+
 ```bash
 python3 mac_scanner.py
+```
+
+(The CLI still prompts for your sudo password; the GUI does not.)
+
+## Uninstall
+
+```bash
+sudo rm -rf /opt/mac-scanner
+sudo rm /usr/local/bin/mac-scanner
+sudo rm /usr/share/applications/mac-scanner.desktop
+sudo rm /usr/share/icons/hicolor/scalable/apps/mac-scanner.svg
+sudo rm /etc/sudoers.d/mac-scanner
 ```
 
 ```
